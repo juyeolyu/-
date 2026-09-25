@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type FormEvent } from "react";
+import { createPortal } from "react-dom";
 import type { ConfirmationResult, RecaptchaVerifier, User } from "firebase/auth";
 import { firebaseApp } from "@/lib/firebase";
 import InquiryInbox from "@/components/InquiryInbox";
@@ -59,6 +60,13 @@ export default function PhoneAuth() {
     }).catch(() => setError("Firebase Authentication을 불러오지 못했습니다."));
     return () => { active = false; unsubscribe?.(); verifier.current?.clear(); verifier.current = null; };
   }, []);
+
+  useEffect(() => {
+    if (!loginOpen) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => { document.body.style.overflow = previousOverflow; };
+  }, [loginOpen]);
 
   function closeLogin() {
     verifier.current?.clear();
@@ -126,8 +134,8 @@ export default function PhoneAuth() {
       ) : (
         <button className="footer-brand footer-login-trigger" type="button" aria-label="담당자 휴대폰 로그인" title="담당자 로그인" onClick={() => { setLoginOpen(true); setError(""); }}>{footerBrand}</button>
       )}
-      {loginOpen && !user && (
-        <div className="modal-backdrop" onMouseDown={(event) => { if (event.target === event.currentTarget) closeLogin(); }}>
+      {loginOpen && !user && typeof document !== "undefined" && createPortal(
+        <div className="modal-backdrop phone-login-backdrop" onMouseDown={(event) => { if (event.target === event.currentTarget) closeLogin(); }}>
           <section className="dialog-card" role="dialog" aria-modal="true" aria-labelledby="phone-login-title">
             <button className="dialog-close" type="button" aria-label="닫기" onClick={closeLogin}>×</button>
             <div className="eyebrow">EUMLANTREE ACCOUNT</div>
@@ -152,7 +160,8 @@ export default function PhoneAuth() {
               </form>
             )}
           </section>
-        </div>
+        </div>,
+        document.body,
       )}
     </>
   );
