@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, type FormEvent } from "react";
 import type { ConfirmationResult, RecaptchaVerifier, User } from "firebase/auth";
 import { firebaseApp } from "@/lib/firebase";
 import InquiryInbox from "@/components/InquiryInbox";
+import logoAsset from "../public/eumlantree-logo-clean.png";
 
 type AuthKit = typeof import("firebase/auth");
 const STAFF_PHONES = new Set(["+821042433383", "+821020387459"]);
@@ -105,17 +106,25 @@ export default function PhoneAuth() {
   }
 
   const isStaff = !!user?.phoneNumber && STAFF_PHONES.has(user.phoneNumber);
-  const phoneLabel = user?.phoneNumber ? `${user.phoneNumber.slice(0, 6)}••••${user.phoneNumber.slice(-3)}` : "";
+  const footerBrand = (
+    <>
+      <img src={logoAsset.src} alt="" />
+      <span>이음랜트리<small>EUMLANTREE</small></span>
+    </>
+  );
 
   return (
     <>
       {user ? (
-        <div className="auth-nav">
-          {isStaff ? <InquiryInbox /> : <span className="auth-user">{phoneLabel}</span>}
-          <button className="auth-nav-button" type="button" onClick={logout}>로그아웃</button>
+        <div className="footer-auth-row">
+          <a className="footer-brand" href="#home" aria-label="이음랜트리 홈">{footerBrand}</a>
+          <div className="auth-nav">
+            {isStaff && <InquiryInbox />}
+            <button className="auth-nav-button" type="button" onClick={logout}>로그아웃</button>
+          </div>
         </div>
       ) : (
-        <button className="auth-nav-button" type="button" onClick={() => { setLoginOpen(true); setError(""); }}>휴대폰 로그인</button>
+        <button className="footer-brand footer-login-trigger" type="button" aria-label="담당자 휴대폰 로그인" title="담당자 로그인" onClick={() => { setLoginOpen(true); setError(""); }}>{footerBrand}</button>
       )}
       {loginOpen && !user && (
         <div className="modal-backdrop" onMouseDown={(event) => { if (event.target === event.currentTarget) closeLogin(); }}>
