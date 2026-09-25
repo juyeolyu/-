@@ -1,0 +1,33 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isStaff() {
+      return request.auth != null
+        && request.auth.token.phone_number in ['+821042433383', '+821020387459'];
+    }
+
+    match /inquiries/{inquiryId} {
+      allow create: if request.resource.data.keys().hasAll(['name', 'phone', 'message', 'consent', 'status', 'createdAt'])
+        && request.resource.data.keys().hasOnly(['name', 'phone', 'message', 'consent', 'status', 'createdAt'])
+        && request.resource.data.name is string
+        && request.resource.data.name.size() > 0
+        && request.resource.data.name.size() <= 80
+        && request.resource.data.phone is string
+        && request.resource.data.phone.size() > 0
+        && request.resource.data.phone.size() <= 30
+        && request.resource.data.message is string
+        && request.resource.data.message.size() > 0
+        && request.resource.data.message.size() <= 4000
+        && request.resource.data.consent == true
+        && request.resource.data.status == 'new'
+        && request.resource.data.createdAt == request.time;
+
+      allow read: if isStaff();
+      allow update: if isStaff()
+        && resource.data.status == 'new'
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status'])
+        && request.resource.data.status == 'read';
+      allow delete: if false;
+    }
+  }
+}
