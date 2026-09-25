@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 161 161">
+  <defs>
+    <filter id="brand-invert" color-interpolation-filters="sRGB">
+      <feColorMatrix values=".2126 .7152 .0722 0 0 .2126 .7152 .0722 0 0 .2126 .7152 .0722 0 0 0 0 0 1 0"/>
+      <feComponentTransfer>
+        <feFuncR type="discrete" tableValues="1 0"/><feFuncG type="discrete" tableValues="1 0"/><feFuncB type="discrete" tableValues="1 0"/>
+      </feComponentTransfer>
+      <feColorMatrix values="0 0 0 0 .06 0 0 0 0 .11 0 0 0 0 .31 0 0 0 1 0"/>
+    </filter>
+  </defs>
+  <image width="161" height="161" preserveAspectRatio="none" filter="url(#brand-invert)" href="https://blogpfthumb-phinf.pstatic.net/MjAyNTAxMjBfMjQ5/MDAxNzM3MzQ1MDQwMDQ2.Jq8tQpr_c1qpbL08OEeTHvDD61ZtaH7xg19oRNRwqlwg.3C0XdC4o7LiPJPtUrspDJwVU_eGi85ryTl2ALBGzwVMg.JPEG/%EB%A1%9C%EA%B3%A0%28%EB%84%A4%EC%9D%B4%EB%B9%84%29.jpg/%25EB%25A1%259C%25EA%25B3%25A0%2528%25EB%2584%25A4%25EC%259D%B4%25EB%25B9%2584%2529.jpg?type=w161"/>
+</svg>
