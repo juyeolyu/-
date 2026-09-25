@@ -77,6 +77,8 @@ h1{line-height:1.28;letter-spacing:-.055em}
 .footer-auth-row .auth-nav{gap:12px}
 .footer-auth-row .auth-nav-button{font-size:10px}
 @media(max-width:640px){.footer-auth-row{align-items:flex-start;flex-direction:column;gap:12px}.footer-auth-row .auth-nav{gap:8px}}
+.phone-login-backdrop{position:fixed!important;inset:0!important;z-index:10000!important;display:grid;place-items:center;isolation:isolate;mix-blend-mode:normal;background:rgba(8,15,34,.76);padding:clamp(14px,4vw,28px);overflow-y:auto}
+.phone-login-backdrop .dialog-card{position:relative;z-index:1;width:min(100%,470px);max-height:min(88dvh,760px);overflow-y:auto;overscroll-behavior:contain;background:#f4f6fc!important;opacity:1!important;mix-blend-mode:normal!important;padding:clamp(26px,5vw,38px);box-shadow:0 24px 90px rgba(0,0,0,.35)}
 .work-photo-picker-shell{position:relative;background:#f8faff;border-top:1px solid #e1e7f4;padding:0 34px}
 .work-photo-picker-shell .work-photo-picker{height:124px;border:0;padding:18px 8px;gap:14px;scroll-behavior:smooth;scroll-snap-type:x mandatory;scroll-padding-inline:calc(50% - 57px)}
 .work-photo-picker-shell .work-photo-picker button{flex:0 0 100px;width:100px;height:82px;border:2px solid #d7dfef;border-radius:5px;transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease;transform-origin:center;scroll-snap-align:center}
